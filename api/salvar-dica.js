@@ -29,7 +29,7 @@ Dica: ${mensagem}
 `;
 
     await put(arquivo, conteudo, {
-      access: 'private'
+      access: 'public'
     });
 
     return res.status(200).json({
