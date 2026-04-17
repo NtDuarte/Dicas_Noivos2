@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dicas para os Noivos</title>
 
-    <link href="https://script.google.com/macros/s/AKfycbxXtbZUPSna_gclgw3L5B9Qg4Jjx1ko1CiwaapTx7UZUxWn8OU8dCbOYkUSEXI5WJuM/exec">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500&family=Great+Vibes&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -89,6 +89,7 @@
             border: 1px solid #ddd;
             border-radius: 8px;
             font-family: inherit;
+            box-sizing: border-box;
         }
 
         textarea {
@@ -110,6 +111,11 @@
         button:hover {
             background-color: #7A92C2;
         }
+
+        button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -121,37 +127,37 @@
 
 <div class="carousel-container">
     <div class="slides" id="slide-track">
-        <img src="ensaio-248.jpg.jpeg" class="slide">
-        <img src="ensaio-263.jpg.jpeg" class="slide">
-        <img src="ensaio-267.jpg.jpeg" class="slide">
-        <img src="ensaio-275.jpg.jpeg" class="slide">
-        <img src="ensaio-313.jpg.jpeg" class="slide">
-        <img src="ensaio-320.jpg.jpeg" class="slide">
-        <img src="ensaio-334.jpg.jpeg" class="slide">
-        <img src="ensaio-393.jpg.jpeg" class="slide">
-        <img src="ensaio-395.jpg.jpeg" class="slide">
-        <img src="ensaio-397.jpg.jpeg" class="slide">
-        <img src="ensaio-439.jpg.jpeg" class="slide">
-        <img src="ensaio-386.jpg.jpeg" class="slide">
-        <img src="ensaio-428.jpg.jpeg" class="slide">
-        <img src="ensaio-232.jpg.jpeg" class="slide">
-        <img src="ensaio-426.jpg.jpeg" class="slide">
+        <img src="ensaio-248.jpg.jpeg" class="slide" alt="Foto 1">
+        <img src="ensaio-263.jpg.jpeg" class="slide" alt="Foto 2">
+        <img src="ensaio-267.jpg.jpeg" class="slide" alt="Foto 3">
+        <img src="ensaio-275.jpg.jpeg" class="slide" alt="Foto 4">
+        <img src="ensaio-313.jpg.jpeg" class="slide" alt="Foto 5">
+        <img src="ensaio-320.jpg.jpeg" class="slide" alt="Foto 6">
+        <img src="ensaio-334.jpg.jpeg" class="slide" alt="Foto 7">
+        <img src="ensaio-393.jpg.jpeg" class="slide" alt="Foto 8">
+        <img src="ensaio-395.jpg.jpeg" class="slide" alt="Foto 9">
+        <img src="ensaio-397.jpg.jpeg" class="slide" alt="Foto 10">
+        <img src="ensaio-439.jpg.jpeg" class="slide" alt="Foto 11">
+        <img src="ensaio-386.jpg.jpeg" class="slide" alt="Foto 12">
+        <img src="ensaio-428.jpg.jpeg" class="slide" alt="Foto 13">
+        <img src="ensaio-232.jpg.jpeg" class="slide" alt="Foto 14">
+        <img src="ensaio-426.jpg.jpeg" class="slide" alt="Foto 15">
     </div>
 </div>
 
 <section class="form-section">
     <form id="dica-form"
-          action="https://script.google.com/macros/s/AKfycbzyrr4PkhZ5LVK1J-loli9vfgrOiJVTZ_4Op6RYbaezs9Dy2Uyim2iVjBlyBG2d-hz1zQ/exec"
+          action="https://script.google.com/macros/s/AKfycbyULRi8ed_1XqeiPfXXj0eKVB_VpaTsp-prZxh4WvjGD0-KUpJCTZzU48FvczbVyR8t8w/exec"
           method="POST"
           target="frame-envio">
 
         <div class="form-group">
-            <label>Seu Nome</label>
+            <label for="nome">Seu Nome</label>
             <input type="text" name="nome" id="nome" required>
         </div>
 
         <div class="form-group">
-            <label>Sua Dica</label>
+            <label for="mensagem">Sua Dica</label>
             <textarea name="mensagem" id="mensagem" required></textarea>
         </div>
 
@@ -191,14 +197,14 @@
 
         botao.disabled = true;
         botao.textContent = 'Enviando...';
-
-        frameEnvio.onload = function () {
-            alert(`Obrigado, ${nome}! Sua dica foi enviada.`);
-            form.reset();
-            botao.disabled = false;
-            botao.textContent = 'Enviar Dica';
-        };
     });
+
+    frameEnvio.onload = function () {
+        botao.disabled = false;
+        botao.textContent = 'Enviar Dica';
+        alert('Dica enviada! Confira a planilha para validar o recebimento.');
+        form.reset();
+    };
 </script>
 
 </body>
