@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dicas para os Noivos</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500&family=Great+Vibes&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --serenity-blue: #92A8D1;
@@ -86,7 +88,6 @@
             padding: 12px;
             border: 1px solid #ddd;
             border-radius: 8px;
-            box-sizing: border-box;
             font-family: inherit;
         }
 
@@ -104,7 +105,6 @@
             border-radius: 8px;
             font-size: 1rem;
             cursor: pointer;
-            transition: background 0.3s;
         }
 
         button:hover {
@@ -114,54 +114,60 @@
 </head>
 <body>
 
-    <header>
-        <h1>Dicas para os Noivos</h1>
-        <p>Sua mensagem é muito importante para nós!</p>
-    </header>
+<header>
+    <h1>Dicas para os Noivos</h1>
+    <p>Sua mensagem é muito importante para nós!</p>
+</header>
 
-    <div class="carousel-container">
-        <div class="slides" id="slide-track">
-            <img src="ensaio-248.jpg.jpeg" class="slide" alt="Ensaio Noivos 248">
-            <img src="ensaio-263.jpg.jpeg" class="slide" alt="Ensaio Noivos 263">
-            <img src="ensaio-267.jpg.jpeg" class="slide" alt="Ensaio Noivos 267">
-            <img src="ensaio-275.jpg.jpeg" class="slide" alt="Ensaio Noivos 275">
-            <img src="ensaio-313.jpg.jpeg" class="slide" alt="Ensaio Noivos 313">
-            <img src="ensaio-320.jpg.jpeg" class="slide" alt="Ensaio Noivos 320">
-            <img src="ensaio-334.jpg.jpeg" class="slide" alt="Ensaio Noivos 334">
-            <img src="ensaio-393.jpg.jpeg" class="slide" alt="Ensaio Noivos 393">
-            <img src="ensaio-395.jpg.jpeg" class="slide" alt="Ensaio Noivos 395">
-            <img src="ensaio-397.jpg.jpeg" class="slide" alt="Ensaio Noivos 397">
-            <img src="ensaio-439.jpg.jpeg" class="slide" alt="Ensaio Noivos 439">
-            <img src="ensaio-386.jpg.jpeg" class="slide" alt="Ensaio Noivos 386">
-            <img src="ensaio-428.jpg.jpeg" class="slide" alt="Ensaio Noivos 428">
-            <img src="ensaio-232.jpg.jpeg" class="slide" alt="Ensaio Noivos 232">
-            <img src="ensaio-426.jpg.jpeg" class="slide" alt="Ensaio Noivos 426">
-        </div>
+<div class="carousel-container">
+    <div class="slides" id="slide-track">
+        <img src="ensaio-248.jpg.jpeg" class="slide">
+        <img src="ensaio-263.jpg.jpeg" class="slide">
+        <img src="ensaio-267.jpg.jpeg" class="slide">
+        <img src="ensaio-275.jpg.jpeg" class="slide">
+        <img src="ensaio-313.jpg.jpeg" class="slide">
+        <img src="ensaio-320.jpg.jpeg" class="slide">
+        <img src="ensaio-334.jpg.jpeg" class="slide">
+        <img src="ensaio-393.jpg.jpeg" class="slide">
+        <img src="ensaio-395.jpg.jpeg" class="slide">
+        <img src="ensaio-397.jpg.jpeg" class="slide">
+        <img src="ensaio-439.jpg.jpeg" class="slide">
+        <img src="ensaio-386.jpg.jpeg" class="slide">
+        <img src="ensaio-428.jpg.jpeg" class="slide">
+        <img src="ensaio-232.jpg.jpeg" class="slide">
+        <img src="ensaio-426.jpg.jpeg" class="slide">
     </div>
+</div>
 
-    <section class="form-section">
-    <form id="dica-form">
+<section class="form-section">
+    <form id="dica-form"
+          action="https://script.google.com/macros/s/AKfycbzyrr4PkhZ5LVK1J-loli9vfgrOiJVTZ_4Op6RYbaezs9Dy2Uyim2iVjBlyBG2d-hz1zQ/exec"
+          method="POST"
+          target="frame-envio">
+
         <div class="form-group">
-            <label for="nome">Seu Nome</label>
-            <input type="text" id="nome" placeholder="Ex: João Silva" required>
+            <label>Seu Nome</label>
+            <input type="text" name="nome" id="nome" required>
         </div>
+
         <div class="form-group">
-            <label for="mensagem">Sua Dica</label>
-            <textarea id="mensagem" placeholder="Deixe aqui seu conselho ou mensagem carinhosa..." required></textarea>
+            <label>Sua Dica</label>
+            <textarea name="mensagem" id="mensagem" required></textarea>
         </div>
+
         <button type="submit" id="btn-enviar">Enviar Dica</button>
     </form>
+
+    <iframe name="frame-envio" style="display:none;"></iframe>
 </section>
 
-   <script>
+<script>
     const track = document.getElementById('slide-track');
     const slides = document.querySelectorAll('.slide');
     let index = 0;
 
-    const URL_SCRIPT = 'https://script.google.com/macros/s/AKfycbzyrr4PkhZ5LVK1J-loli9vfgrOiJVTZ_4Op6RYbaezs9Dy2Uyim2iVjBlyBG2d-hz1zQ/exec';
-
     function moveCarousel() {
-        if (slides.length === 0) return;
+        if (!slides.length) return;
         index++;
         if (index >= slides.length) index = 0;
         track.style.transform = `translateX(-${index * 100}%)`;
@@ -169,40 +175,29 @@
 
     setInterval(moveCarousel, 4000);
 
-    document.getElementById('dica-form').addEventListener('submit', async function (e) {
-        e.preventDefault();
+    const form = document.getElementById('dica-form');
+    const botao = document.getElementById('btn-enviar');
+    const frameEnvio = document.querySelector('iframe[name="frame-envio"]');
 
+    form.addEventListener('submit', function (e) {
         const nome = document.getElementById('nome').value.trim();
         const mensagem = document.getElementById('mensagem').value.trim();
-        const botao = document.getElementById('btn-enviar');
 
         if (!nome || !mensagem) {
-            alert('Preencha seu nome e sua dica antes de enviar.');
+            e.preventDefault();
+            alert('Preencha todos os campos.');
             return;
         }
 
         botao.disabled = true;
         botao.textContent = 'Enviando...';
 
-        try {
-            await fetch(URL_SCRIPT, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'text/plain;charset=utf-8'
-                },
-                body: JSON.stringify({ nome, mensagem })
-            });
-
-            alert(`Obrigado, ${nome}! Sua dica foi enviada com sucesso.`);
-            this.reset();
-        } catch (erro) {
-            console.error('Erro ao enviar dica:', erro);
-            alert('Erro ao enviar a dica.');
-        } finally {
+        frameEnvio.onload = function () {
+            alert(`Obrigado, ${nome}! Sua dica foi enviada.`);
+            form.reset();
             botao.disabled = false;
             botao.textContent = 'Enviar Dica';
-        }
+        };
     });
 </script>
 
