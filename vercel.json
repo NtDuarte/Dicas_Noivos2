@@ -1,5 +1,3 @@
-import { put } from '@vercel/blob';
-...
-await put(arquivo, conteudo, {
-  access: 'public'
-});
+{
+  "cleanUrls": true
+}
