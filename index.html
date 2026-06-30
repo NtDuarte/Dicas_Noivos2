@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dicas para os Noivos</title>
+    <title>Confirme sua Presença</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500&family=Great+Vibes&display=swap" rel="stylesheet">
 
@@ -38,6 +38,10 @@
             font-size: 3.5rem;
             color: var(--serenity-blue);
             margin: 0;
+        }
+
+        header p {
+            margin-top: 10px;
         }
 
         .carousel-container {
@@ -83,7 +87,7 @@
             font-weight: 500;
         }
 
-        input, textarea {
+        input[type="text"] {
             width: 100%;
             padding: 12px;
             border: 1px solid #ddd;
@@ -92,9 +96,26 @@
             box-sizing: border-box;
         }
 
-        textarea {
-            height: 120px;
-            resize: none;
+        .radio-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 400;
+            cursor: pointer;
+        }
+
+        .radio-option input {
+            width: auto;
+            cursor: pointer;
+        }
+
+        #acompanhante-wrapper {
+            display: none;
         }
 
         button {
@@ -121,8 +142,8 @@
 <body>
 
 <header>
-    <h1>Dicas para os Noivos</h1>
-    <p>Sua mensagem é muito importante para nós!</p>
+    <h1>Confirme sua Presença</h1>
+    <p>Sua confirmação é muito importante para nós!</p>
 </header>
 
 <div class="carousel-container">
@@ -146,7 +167,7 @@
 </div>
 
 <section class="form-section">
-    <form id="dica-form"
+    <form id="rsvp-form"
           action="https://script.google.com/macros/s/AKfycbyULRi8ed_1XqeiPfXXj0eKVB_VpaTsp-prZxh4WvjGD0-KUpJCTZzU48FvczbVyR8t8w/exec"
           method="POST"
           target="frame-envio">
@@ -157,11 +178,39 @@
         </div>
 
         <div class="form-group">
-            <label for="mensagem">Sua Dica</label>
-            <textarea name="mensagem" id="mensagem" required></textarea>
+            <label>Você vai comparecer?</label>
+            <div class="radio-group">
+                <label class="radio-option">
+                    <input type="radio" name="comparecimento" value="Sim" required>
+                    Sim
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="comparecimento" value="Não" required>
+                    Não
+                </label>
+            </div>
         </div>
 
-        <button type="submit" id="btn-enviar">Enviar Dica</button>
+        <div class="form-group" id="acompanhante-pergunta" style="display:none;">
+            <label>Você vai levar acompanhante?</label>
+            <div class="radio-group">
+                <label class="radio-option">
+                    <input type="radio" name="temAcompanhante" value="Sim">
+                    Sim
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="temAcompanhante" value="Não">
+                    Não
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group" id="acompanhante-wrapper">
+            <label for="nomeAcompanhante">Nome do Acompanhante</label>
+            <input type="text" name="nomeAcompanhante" id="nomeAcompanhante">
+        </div>
+
+        <button type="submit" id="btn-enviar">Confirmar Presença</button>
     </form>
 
     <iframe name="frame-envio" style="display:none;"></iframe>
@@ -181,17 +230,49 @@
 
     setInterval(moveCarousel, 4000);
 
-    const form = document.getElementById('dica-form');
+    const form = document.getElementById('rsvp-form');
     const botao = document.getElementById('btn-enviar');
     const frameEnvio = document.querySelector('iframe[name="frame-envio"]');
 
+    const comparecimentoRadios = document.querySelectorAll('input[name="comparecimento"]');
+    const acompanhantePergunta = document.getElementById('acompanhante-pergunta');
+    const acompanhanteWrapper = document.getElementById('acompanhante-wrapper');
+    const temAcompanhanteRadios = document.querySelectorAll('input[name="temAcompanhante"]');
+    const nomeAcompanhanteInput = document.getElementById('nomeAcompanhante');
+
+    comparecimentoRadios.forEach(radio => {
+        radio.addEventListener('change', function () {
+            if (this.value === 'Sim') {
+                acompanhantePergunta.style.display = 'block';
+            } else {
+                acompanhantePergunta.style.display = 'none';
+                acompanhanteWrapper.style.display = 'none';
+                temAcompanhanteRadios.forEach(r => r.checked = false);
+                nomeAcompanhanteInput.value = '';
+                nomeAcompanhanteInput.required = false;
+            }
+        });
+    });
+
+    temAcompanhanteRadios.forEach(radio => {
+        radio.addEventListener('change', function () {
+            if (this.value === 'Sim') {
+                acompanhanteWrapper.style.display = 'block';
+                nomeAcompanhanteInput.required = true;
+            } else {
+                acompanhanteWrapper.style.display = 'none';
+                nomeAcompanhanteInput.value = '';
+                nomeAcompanhanteInput.required = false;
+            }
+        });
+    });
+
     form.addEventListener('submit', function (e) {
         const nome = document.getElementById('nome').value.trim();
-        const mensagem = document.getElementById('mensagem').value.trim();
 
-        if (!nome || !mensagem) {
+        if (!nome) {
             e.preventDefault();
-            alert('Preencha todos os campos.');
+            alert('Preencha seu nome.');
             return;
         }
 
@@ -201,9 +282,11 @@
 
     frameEnvio.onload = function () {
         botao.disabled = false;
-        botao.textContent = 'Enviar Dica';
-        alert('Dica enviada!');
+        botao.textContent = 'Confirmar Presença';
+        alert('Presença confirmada! Obrigado.');
         form.reset();
+        acompanhantePergunta.style.display = 'none';
+        acompanhanteWrapper.style.display = 'none';
     };
 </script>
 
